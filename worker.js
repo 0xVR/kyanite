@@ -1,16 +1,16 @@
 const { createHash } = require('crypto');
 const { generate } = require('brute-force-generator');
-const { workerData, parentPort, terminate } = require('worker_threads');
+const { workerData, parentPort } = require('worker_threads');
 
 function crackHash(hashToCrack, range) {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';
-    const combos = generate(chars.split(), 8);
+    const combos = generate(chars.split(''), 8);
     let i = 1;
     const start = Date.now();
-    const hash = createHash('sha256');
     for (const record of combos) {
+        const hash = createHash('sha256');
         hash.update(record);
-        console.log(`[+] Tried ${i} combination(s)`);
+        parentPort.postMessage(1);
         i++;
         
         if (range === 1) {
@@ -36,12 +36,11 @@ function crackHash(hashToCrack, range) {
         }
 
         if (hash.digest('hex') === hashToCrack) {
-            console.log(`\n[+] Match found: \n\t${record}`);
-            console.log(`Time taken: ${Date.now() - start}ms`);
+            console.log(`\n[+] Match found: \n\t${record}\nTime taken: ${Date.now() - start}ms`);
             break;
         }
     }
-    terminate();
+    process.exit();
 }
 
 crackHash(workerData.hashToCrack, workerData.i);

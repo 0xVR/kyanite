@@ -16,22 +16,28 @@ async function main() {
     console.log('=-=-=-=-=-=-=-=-=-=-=\n    Hash Cracker\n=-=-=-=-=-=-=-=-=-=-=');
     console.log('Please enter the SHA256 hash you want to crack:');
     const hashToCrack = await takeInput('> ');
+    let total = 0;
+    const counter = setInterval(() => process.stdout.write(`\r\x1b[K[+] Tried ${total} combination(s)`), 250);
     const threads = new Set();
     for (let i = 1; i < 5; i++) {
-        threads.add(new Worker('./worker.js', { workerData: { hashToCrack, i } }));
-    }
-    for (const worker of threads) {
+        const worker = new Worker('./worker.js', { workerData: { hashToCrack, i } });
+        threads.add(worker);
+        worker.on('message', () => {
+            total += 1;
+        })
         worker.on('exit', () => {
             threads.delete(worker);
+            threads.forEach(thread => {
+                thread.terminate();
+                threads.delete(thread);
+            });
+            clearInterval(counter);
+            
         })
         worker.on('error', e => {
-            console.log(e);
+            console.error(e);
         })
-        }
+    }
 }
 
-try {
-    main();
-} catch(e) {
-    console.log(e);
-}
+main().catch(e => console.error(e));

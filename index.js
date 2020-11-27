@@ -25,14 +25,15 @@ async function main() {
         worker.on('message', () => {
             total += 1;
         })
-        worker.on('exit', () => {
+        worker.on('exit', c => {
             threads.delete(worker);
-            threads.forEach(thread => {
-                thread.terminate();
-                threads.delete(thread);
-            });
-            clearInterval(counter);
-            
+            if (c === 2) {
+                threads.forEach(thread => {
+                    thread.terminate();
+                    threads.delete(thread);
+                });
+                clearInterval(counter);
+            }
         })
         worker.on('error', e => {
             console.error(e);

@@ -1,6 +1,6 @@
-const { createHash } = require('crypto');
-const { generate } = require('brute-force-generator');
-const { workerData, parentPort } = require('worker_threads');
+import { createHash } from 'crypto';
+import { generate } from 'brute-force-generator';
+import { workerData, parentPort } from 'worker_threads';
 
 function crackHash(hashToCrack, range) {
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*';

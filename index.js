@@ -12,7 +12,7 @@ function takeInput(q) {
     }))
 }
 
-console.log('=-=-=-=-=-=-=-=-=-=-=\n    Hash Cracker\n=-=-=-=-=-=-=-=-=-=-=');
+console.log('=-=-=-=-=-=-=-=-=-=-=\n    Kyanite\n=-=-=-=-=-=-=-=-=-=-=');
 console.log('Please enter the SHA256 hash you want to crack:');
 const hashToCrack = await takeInput('> ');
 

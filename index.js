@@ -28,7 +28,7 @@ for (let i = 1; i < 5; i++) {
     })
     worker.on('exit', c => {
         threads.delete(worker);
-        if (c === 2) {
+        if (c === 0) {
             threads.forEach(thread => {
                 thread.terminate();
                 threads.delete(thread);

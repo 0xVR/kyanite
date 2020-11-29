@@ -37,10 +37,10 @@ function crackHash(hashToCrack, range) {
 
         if (hash.digest('hex') === hashToCrack) {
             console.log(`\n[+] Match found: \n\t${record}\nTime taken: ${Date.now() - start}ms`);
-            process.exit(2);
+            process.exit();
         }
     }
-    process.exit();
+    process.exit(2);
 }
 
 crackHash(workerData.hashToCrack, workerData.i);

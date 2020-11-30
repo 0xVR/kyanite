@@ -3,8 +3,6 @@
 
 A simple SHA256 hash brute-forcer written in Node.js
 
-Note: It only tries combinations that are up to 8 characters long
-
 ## Installation
 
 1. Clone the repo
@@ -22,3 +20,7 @@ Run the main file
 ```sh
 node index.js
 ```
+A few general notes:
+- It only tries combinations that are up to 8 characters long
+- Sometimes, it may be better to use less threads instead of more, due to the order in which the combinations are generated
+- There are no hard-coded limits, so be sure not to spawn too many threads and end up freezing your computer

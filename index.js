@@ -24,7 +24,9 @@ if (isNaN(threadsNumber)) {
 if (threadsNumber < 1) {
     threadsNumber = 4;
 } else if (170808406779660 % threadsNumber !== 0) {   //Make sure that the factorial can be evenly divdied into the number of threads
-    threadsNumber = threadsNumber - (170808406779660 % threadsNumber)
+    while (170808406779660 % threadsNumber !== 0) {
+        threadsNumber -= 1;
+    }
 }
 console.log(`Starting with ${threadsNumber} threads`);
 

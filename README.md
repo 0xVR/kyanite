@@ -1,5 +1,5 @@
 # kyanite
-![version v1.0.0](https://img.shields.io/github/package-json/v/xVyre/kyanite) ![requires node.js >= 14](https://img.shields.io/badge/requires%20node.js-%3E%3D14-yellowgreen) ![license mit](https://img.shields.io/github/license/xVyre/kyanite)
+![version](https://img.shields.io/github/package-json/v/xVyre/kyanite) ![requires node.js >= 14](https://img.shields.io/badge/requires%20node.js-%3E%3D14-yellowgreen) ![license mit](https://img.shields.io/github/license/xVyre/kyanite)
 
 A simple SHA256 hash brute-forcer written in Node.js
 
@@ -15,6 +15,15 @@ npm install
 ```
 
 ## Usage
+```sh
+Usage: node index.js HASH [OPTIONS]
+
+Options:
+      --version  Show version number                                   [boolean]
+  -t, --threads  Number of threads to use                  [number] [default: 4]
+  -h, --help     Show help                                             [boolean]
+```
+*Or*:
 
 Run the main file
 ```sh

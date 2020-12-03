@@ -1,5 +1,6 @@
 import { Worker } from 'worker_threads';
 import { createInterface } from 'readline';
+import yargs from 'yargs';
 
 function takeInput(q) {
     const rl = createInterface({
@@ -12,11 +13,33 @@ function takeInput(q) {
     }))
 }
 
-console.log('=-=-=-=-=-=-=-=-=-=-=\n    Kyanite\n=-=-=-=-=-=-=-=-=-=-=');
-console.log('Please enter the SHA256 hash you want to crack:');
-const hashToCrack = await takeInput('> ');
-console.log('Please enter the number of threads you would like to be used (defaults to 4):');
-let threadsNumber = Number(await takeInput('> '));
+console.log('=-=-=-=-=-=-=-=-=-=-=\n    Kyanite\n=-=-=-=-=-=-=-=-=-=-=\n');
+let threadsNumber = 4;
+let hashToCrack = '';
+
+if (process.argv.length > 2) {
+    const argv = yargs(process.argv.splice(2))
+        .demandCommand(1)
+        .option('threads', {
+            alias: 't',
+            description: 'Number of threads to use',
+            type: 'number',
+            default: 4
+        })
+        .usage('Usage: node $0 HASH [OPTIONS]')
+        .help()
+        .alias('help', 'h')
+        .argv;
+    
+    hashToCrack = argv._[0];
+    threadsNumber = argv.t;
+} else {
+    console.log('Please enter the SHA256 hash you want to crack:');
+    hashToCrack = await takeInput('> ');
+    console.log('Please enter the number of threads you would like to be used (defaults to 4):');
+    threadsNumber = Number(await takeInput('> '));
+}
+
 if (isNaN(threadsNumber)) {
     console.log('Please enter a number');
     process.exit();

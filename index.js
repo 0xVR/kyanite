@@ -1,6 +1,7 @@
 import { Worker } from 'worker_threads';
 import { createInterface } from 'readline';
 import yargs from 'yargs';
+import { cpus } from 'os';
 
 function takeInput(q) {
     const rl = createInterface({
@@ -14,7 +15,7 @@ function takeInput(q) {
 }
 
 console.log('=-=-=-=-=-=-=-=-=-=-=\n    Kyanite\n=-=-=-=-=-=-=-=-=-=-=\n');
-let threadsNumber = 4;
+let threadsNumber = cpus().length;
 let hashToCrack = '';
 
 if (process.argv.length > 2) {
@@ -24,7 +25,7 @@ if (process.argv.length > 2) {
             alias: 't',
             description: 'Number of threads to use',
             type: 'number',
-            default: 4
+            default: cpus().length
         })
         .usage('Usage: node $0 HASH [OPTIONS]')
         .help()
@@ -36,17 +37,14 @@ if (process.argv.length > 2) {
 } else {
     console.log('Please enter the SHA256 hash you want to crack:');
     hashToCrack = await takeInput('> ');
-    console.log('Please enter the number of threads you would like to be used (defaults to 4):');
+    console.log('Please enter the number of threads you would like to be used (defaults to however many you have):');
     threadsNumber = Number(await takeInput('> '));
 }
 
-if (isNaN(threadsNumber)) {
-    console.log('Please enter a number');
-    process.exit();
+if (isNaN(threadsNumber) || threadsNumber < 1) {
+    threadsNumber = cpus().length;
 }
-if (threadsNumber < 1) {
-    threadsNumber = 4;
-} else if (170808406779660 % threadsNumber !== 0) {   //Make sure that the factorial can be evenly divdied into the number of threads
+if (170808406779660 % threadsNumber !== 0) {   //Make sure that the factorial can be evenly divdied into the number of threads
     while (170808406779660 % threadsNumber !== 0) {
         threadsNumber -= 1;
     }

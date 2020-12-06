@@ -15,12 +15,12 @@ npm install
 ```
 
 ## Usage
-```sh
+```
 Usage: node index.js HASH [OPTIONS]
 
 Options:
       --version  Show version number                                   [boolean]
-  -t, --threads  Number of threads to use                  [number] [default: 4]
+  -t, --threads  Number of threads to use                  [number] [default: os.cpus().length]
   -h, --help     Show help                                             [boolean]
 ```
 *Or*:

@@ -1,56 +1,29 @@
-import { createHash } from "crypto";
-import { generate } from "brute-force-generator";
-import { workerData, parentPort } from "worker_threads";
+import { createHash } from 'crypto';
+import { workerData, parentPort } from 'worker_threads';
+import { generator } from 'indexed-string-variation';
 
-function setRange() {
-  const quotient = 170808406779660 / workerData.threadsNumber;
-  const range = [];
-  for (let i = 1; i < workerData.threadsNumber + 1; i++) {
-    range.push(quotient * i);
+const start = Date.now();
+let { i } = workerData;
+const variations = generator(
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'
+);
+let hashCracked = false;
+
+while (!hashCracked) {
+  const hash = createHash('sha256');
+  hash.update(variations(i));
+  parentPort.postMessage('increment');
+
+  if (hash.digest('hex') === workerData.hashToCrack) {
+    console.log(
+      `\n[+] Match found: \n\t${variations(i)}\nTime taken: ${
+        Date.now() - start
+      }ms`
+    );
+    hashCracked = true;
   }
-  return range;
+
+  i += workerData.threadsNumber;
 }
 
-function crackHash(hashToCrack, index) {
-  const chars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-  const combos = generate(chars.split(""), 8);
-  let i = 1;
-  const start = Date.now();
-  const range = setRange();
-  lol: for (const record of combos) {
-    const hash = createHash("sha256");
-    hash.update(record);
-    parentPort.postMessage(1);
-    i++;
-
-    //Make sure each thread is in its range
-    for (let n = 1; n < workerData.threadsNumber + 1; n++) {
-      if (index !== n) {
-        continue;
-      } else {
-        if (index === 1) {
-          if (i > range[0]) {
-            break lol;
-          }
-        } else {
-          if (i < range[index - 1]) {
-            continue lol;
-          } else if (i > range[index]) {
-            break lol;
-          }
-        }
-      }
-    }
-
-    if (hash.digest("hex") === hashToCrack) {
-      console.log(
-        `\n[+] Match found: \n\t${record}\nTime taken: ${Date.now() - start}ms`
-      );
-      process.exit(0);
-    }
-  }
-  process.exit(2);
-}
-
-crackHash(workerData.hashToCrack, workerData.i);
+process.exit(0);

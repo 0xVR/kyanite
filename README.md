@@ -15,7 +15,7 @@ git clone https://github.com/xVyre/kyanite.git
 2. Install NPM packages
 
 ```sh
-npm install
+cd kyanite && npm install
 ```
 
 ## Usage

@@ -1,6 +1,7 @@
 import { createHash } from 'crypto';
 import { workerData, parentPort } from 'worker_threads';
 import { generator } from 'indexed-string-variation';
+import bigInt from 'big-integer';
 
 const start = Date.now();
 let { i } = workerData;
@@ -24,6 +25,25 @@ while (!hashCracked) {
   }
 
   i += workerData.threadsNumber;
+
+  if (!Number.isSafeInteger(i)) {
+    break;
+  }
 }
 
-process.exit(0);
+while (!hashCracked) {
+  const hash = createHash('sha256');
+  hash.update(variations(bigInt(i)));
+  parentPort.postMessage('increment');
+
+  if (hash.digest('hex') === workerData.hashToCrack) {
+    console.log(
+      `\n[+] Match found: \n\t${variations(bigInt(i))}\nTime taken: ${
+        Date.now() - start
+      }ms`
+    );
+    hashCracked = true;
+  }
+
+  i += workerData.threadsNumber;
+}

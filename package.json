@@ -2,9 +2,10 @@
   "name": "kyanite",
   "type": "module",
   "description": "A simple SHA256 hash brute-forcer written in Node.js",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "main": "index.js",
   "dependencies": {
+    "big-integer": "^1.6.48",
     "indexed-string-variation": "^1.0.3",
     "yargs": "^16.1.1"
   },

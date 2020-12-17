@@ -37,7 +37,6 @@ Run the main file
 npm start
 ```
 
-A few general notes:
+Note:
 
-- Sometimes, it may be better to use less threads instead of more, due to the order in which the combinations are generated
 - There are no hard-coded limits, so be sure not to spawn too many threads and end up freezing your computer

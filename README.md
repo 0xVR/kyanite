@@ -1,7 +1,9 @@
 # kyanite
 ![Logo](https://siasky.net/KAB6CEcOQkCQ0EKbBWlBYe7YduK9oyBusMJZI63LAWqMZA)
 
-![version](https://img.shields.io/github/package-json/v/xVyre/kyanite) ![requires node.js >= 14](https://img.shields.io/badge/requires%20node.js-%3E%3D14-yellowgreen) ![license mit](https://img.shields.io/github/license/xVyre/kyanite)
+![Version](https://img.shields.io/github/package-json/v/xVyre/kyanite)
+![Requires node.js](https://img.shields.io/badge/requires%20node.js-%3E%3D14-yellowgreen)
+![License](https://img.shields.io/github/license/xVyre/kyanite)
 
 A simple SHA256 hash brute-forcer using worker threads, written in Node.js
 

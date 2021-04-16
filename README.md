@@ -42,5 +42,6 @@ npm start
 
 A few general notes:
 
-- There are no hard-coded limits, so be sure not to spawn too many threads and end up freezing your computer
+- Kyanite wasn't made for practical usage, it's more of a fun project
+- As such, there are no hard-coded limits, so be sure not to spawn too many threads and end up freezing your computer
 - If the program gets to the point where it has tried more than roughly 1.1x10^17 combinations, it switches to using BigInts. You may notice a relevant decrease in performance

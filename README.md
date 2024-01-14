@@ -1,5 +1,5 @@
 # kyanite
-![Logo](https://siasky.net/KAB6CEcOQkCQ0EKbBWlBYe7YduK9oyBusMJZI63LAWqMZA)
+![Logo](https://repository-images.githubusercontent.com/315076796/79043a00-42eb-11eb-8bf2-7920cd8efc66)
 
 ![Version](https://img.shields.io/github/package-json/v/xVyre/kyanite)
 ![Requires node.js](https://img.shields.io/badge/requires%20node.js-%3E%3D14-yellowgreen)
@@ -12,7 +12,7 @@ A simple SHA256 hash brute-forcer using worker threads, written in Node.js
 1. Clone the repo
 
 ```sh
-git clone https://github.com/xVyre/kyanite.git
+git clone https://github.com/0xVR/kyanite.git
 ```
 
 2. Install NPM packages
